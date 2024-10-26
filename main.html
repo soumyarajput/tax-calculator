@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tax Calculator (INR)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f5;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "SOUMYA";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 20rem; 
+      color: rgba(0, 0, 0, 0.03);
+      z-index: 2; 
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .calculator {
+      padding: 20px;
+      width: 300px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 3; 
+    }
+    .calculator h2 {
+      text-align: center;
+      color: #333;
+    }
+    .calculator label {
+      display: block;
+      margin-top: 10px;
+      color: #666;
+    }
+    .calculator input, .calculator select, .calculator button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .calculator button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .calculator button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator">
+  <h2>Tax Calculator (INR)</h2>
+  
+  <label for="amount">Amount (in ₹):</label>
+  <input type="number" id="amount" placeholder="Enter amount" required>
+  
+  <label for="itemType">Select Item Type:</label>
+  <select id="itemType">
+    <option value="food">Food - 5% Tax</option>
+    <option value="electronics">Electronics - 18% Tax</option>
+    <option value="clothing">Clothing - 12% Tax</option>
+    <option value="books">Books - 0% Tax</option>
+  </select>
+  
+  <button onclick="calculateTax()">Calculate Total</button>
+  
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  const taxRates = {
+    "food": 5,
+    "electronics": 18,
+    "clothing": 12,
+    "books": 0
+  };
+
+  function calculateTax() {
+    const amount = parseFloat(document.getElementById("amount").value);
+    const itemType = document.getElementById("itemType").value;
+    
+    if (isNaN(amount) || amount <= 0) {
+      document.getElementById("result").innerText = "Please enter a valid amount.";
+      return;
+    }
+    
+    const taxRate = taxRates[itemType];
+    const taxAmount = (amount * taxRate) / 100;
+    const totalAmount = amount + taxAmount;
+    
+    document.getElementById("result").innerText = `Total amount with tax: ₹${totalAmount.toFixed(2)}`;
+  }
+</script>
+
+</body>
+</html>
